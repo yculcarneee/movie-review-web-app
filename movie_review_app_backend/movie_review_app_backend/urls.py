@@ -22,5 +22,6 @@ from apis.views import main
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
-    path('movies/', main, name="main")
+    path('movies/', main, name="main"),
+    path('movies/page<int:page>', main, name="main")
 ]
