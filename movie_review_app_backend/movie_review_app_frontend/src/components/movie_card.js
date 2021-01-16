@@ -31,6 +31,8 @@ export default function MovieCard(props) {
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
+                    Card Number: {props.id} <br/>
+                    Page Number: {props.page} <br/>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 </Typography>
             </CardContent>
