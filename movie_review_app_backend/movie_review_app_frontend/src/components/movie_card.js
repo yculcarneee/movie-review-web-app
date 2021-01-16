@@ -3,7 +3,7 @@ import {Card, CardHeader, CardMedia, CardContent, CardActions, Typography, IconB
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Rating from '@material-ui/lab/Rating';
 
-export default function MovieCard() {
+export default function MovieCard(props) {
 
     const [watchedMovieButtonColor, setWatchedMovieButtonColor] = React.useState('grey')
     const [rating, setRating] = React.useState(2);
@@ -38,7 +38,7 @@ export default function MovieCard() {
                 <IconButton style={{color: watchedMovieButtonColor}} onClick={()=>{toggleWatchedMovieButtonColor()}}>
                     <VisibilityIcon />
                 </IconButton>
-                <Rating name="Movie Rating" value={rating} onChange={(event, newRating) => {setRating(newRating);}}/>
+                <Rating name={props.id} value={rating} onChange={(event, newRating) => {setRating(newRating);}}/>
             </CardActions>
         </Card>
     )
