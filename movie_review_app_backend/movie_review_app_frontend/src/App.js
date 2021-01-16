@@ -56,6 +56,13 @@ function App() {
               </Grid>
             ))
           }
+          {/* <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
+            <MovieCard id={curPageData[1].id} page={page} title={curPageData[1].title} overview={curPageData[1].overview} release_date={curPageData[1].release_date} poster={curPageData[1].poster}/>
+          </Grid> */}
+          
+          {/* <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
+            <MovieCard id={curPageData[0].id} page={page} title={curPageData[0].title} overview={curPageData[0].overview} release_date={curPageData[0].release_date} poster={curPageData[0].poster}/>
+          </Grid> */}
         </Grid>
         <Box my={2} display="flex" justifyContent="center">
           <Typography>Page: {page}</Typography>
