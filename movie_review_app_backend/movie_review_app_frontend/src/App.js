@@ -9,49 +9,63 @@ import {Pagination} from "@material-ui/lab"
 function App() {
 
   const [page, setPage] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(1);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [curPageData, setCurPageData] = React.useState([]);
+
+  const getCurPageData = async() => {
+
+    const endpoint = 'http://localhost:8000/movies/page' + page;
+
+    fetch(endpoint)
+      .then(response => response.json())
+      .then((curPageDataObj) => {
+        setCurPageData(curPageDataObj.results);
+        setTotalPages(curPageDataObj.total_pages);
+        setIsLoaded(true);
+      })
+  }
+
   const handleChange = (event, value) => {
     setPage(value);
   };
 
-  return (
-    <div className="App">
-      <Grid container direction="row" align="center">
-        <Grid item lg={12}>
-          <h1> Movie Review App </h1>
+  React.useEffect(() => {
+    setIsLoaded(false);
+    getCurPageData();
+  }, [page])
+
+  if(!isLoaded) {
+    return (
+      <div>
+        <h1> Loading... </h1>
+      </div>
+    )
+  }
+  else {
+    return (
+      <div>
+        <Grid container direction="row" align="center">
+          <Grid item lg={12} xs={12}>
+            <h1> Movie Review App </h1>
+          </Grid>
+          {
+            curPageData.map(movie => (
+              <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
+                <MovieCard id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster}/>
+              </Grid>
+            ))
+          }
         </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="1" page={page} />
-        </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="2" page={page}/>
-        </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="3" page={page}/>
-        </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="4" page={page}/>
-        </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="5" page={page}/>
-        </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="6" page={page}/>
-        </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="7" page={page}/>
-        </Grid>
-        <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-          <MovieCard id="8" page={page}/>
-        </Grid>
-      </Grid>
-      <Box my={2} display="flex" justifyContent="center">
-        <Typography>Page: {page}</Typography>
-      </Box>
-      <Box my={2} display="flex" justifyContent="center">
-        <Pagination count={10} page={page} onChange={handleChange} />        
-      </Box>
-    </div>
-  );
+        <Box my={2} display="flex" justifyContent="center">
+          <Typography>Page: {page}</Typography>
+        </Box>
+        <Box my={2} display="flex" justifyContent="center">
+          <Pagination count={totalPages} page={page} onChange={handleChange} />        
+        </Box>
+      </div>
+    );
+  }
 }
 
 export default App;

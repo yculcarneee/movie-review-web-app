@@ -20,20 +20,18 @@ export default function MovieCard(props) {
     return (
         <Card style={{maxWidth: '340px', maxHeight: '800px'}}>
             <CardHeader
-                title="Movie Name"
-                subheader="Release Date - September 14, 2016"
+                title={props.title}
+                subheader={props.release_date}
             />
             <CardMedia
                 component="img"
                 height="300px"
-                image="https://placeimg.com/340/300/any"
-                title="Movie Title"
+                image={props.poster}
+                title={props.title}
             />
             <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Card Number: {props.id} <br/>
-                    Page Number: {props.page} <br/>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                <Typography variant="body2" color="textSecondary" component="p" align="justify">
+                    {props.overview}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
