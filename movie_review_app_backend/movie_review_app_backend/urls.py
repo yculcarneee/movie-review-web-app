@@ -18,10 +18,12 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from apis.views import main
+from database.views import addToWatchedList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
     path('movies/', main, name="main"),
-    path('movies/page<int:page>', main, name="main")
+    path('movies/page<int:page>', main, name="main"),
+    path('addToWatchedList/', addToWatchedList, name="addToWatchedList"),
 ]
