@@ -17,17 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 
-from apis.views import main
-from database.views import addToWatchedList, removeFromWatchedList, checkPageInWatchedList, updateMovieRating, getCurrentPageMovieRatings
+from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
-    path('movies/', main, name="main"),
-    path('movies/page<int:page>', main, name="main"),
-    path('addToWatchedList/', addToWatchedList, name="addToWatchedList"),
-    path('removeFromWatchedList/', removeFromWatchedList, name="removeFromWatchedList"),
-    path('checkPageInWatchedList/', checkPageInWatchedList, name="checkPageInWatchedList"),
-    path('updateMovieRating/', updateMovieRating, name="updateMovieRating"),
-    path('getCurrentPageMovieRatings/', getCurrentPageMovieRatings, name="getCurrentPageMovieRatings"),
+    path('movies/', include('apis.urls')),
+    path('database/', include('database.urls'))
 ]
