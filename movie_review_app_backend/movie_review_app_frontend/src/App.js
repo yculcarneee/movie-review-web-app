@@ -34,17 +34,33 @@ function App() {
         .then(response => response.json())
         .then(watchedEntries => {
 
-          watchedEntries = JSON.parse(watchedEntries)
-          
-          curPageDataObj.results.forEach(entry => {
-            if(entry['id'] in watchedEntries && watchedEntries[entry['id']]) {
-              entry['isWatched'] = true;
-            }
-            else {
-              entry['isWatched'] = false;
-            }
+          const endpoint = 'http://localhost:8000/getCurrentPageMovieRatings/'
+
+          fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json', 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(curPageDataObj.results)
           })
-          setCurPageData(curPageDataObj.results)
+          .then(response => response.json())
+          .then(movieRatingEntries => {
+
+            watchedEntries = JSON.parse(watchedEntries)
+            movieRatingEntries = JSON.parse(movieRatingEntries)
+          
+            curPageDataObj.results.forEach(entry => {
+              if(entry['id'] in watchedEntries && watchedEntries[entry['id']]) {
+                entry['isWatched'] = true;
+              }
+              else {
+                entry['isWatched'] = false;
+              }
+              entry['rating'] = movieRatingEntries[entry['id']]
+            })
+            setCurPageData(curPageDataObj.results)
+          })
         })
       
         setTotalPages(curPageDataObj.total_pages);
@@ -78,7 +94,7 @@ function App() {
           {
             curPageData.map(movie => (
               <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-                <MovieCard key={movie.id} id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster} isWatched={movie.isWatched}/>
+                <MovieCard key={movie.id} id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster} rating={movie.rating} isWatched={movie.isWatched}/>
               </Grid>
             ))
           }

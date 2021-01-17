@@ -79,6 +79,10 @@ export default function MovieCard(props) {
     }
 
     React.useEffect(() => {
+        setRating(props.rating)
+        if(props.isWatched) {
+            setWatchedMovieButtonColor('#ffb400')
+        }
         if(props.overview.length > 150) {
             setNeedsExpansion(true);
             setExpandedOverviewText(props.overview.substring(0, 150));
