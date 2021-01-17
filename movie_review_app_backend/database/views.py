@@ -52,3 +52,18 @@ def updateMovieRating(request: HttpRequest):
     database.save()
 
     return Response(status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def getCurrentPageMovieRatings(request: HttpRequest):
+    
+    data = json.loads(request.body)
+
+    response = {}
+
+    for entry in data:
+        if(MovieRatingDatabase.objects.filter(movieId = entry['id']).exists()):
+            response[entry['id']] = MovieRatingDatabase.objects.get(movieId = entry['id']).movieRating
+        else:
+            response[entry['id']] = 0
+
+    return Response(status=status.HTTP_200_OK, data=json.dumps(response))
