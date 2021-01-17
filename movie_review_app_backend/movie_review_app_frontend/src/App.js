@@ -21,7 +21,7 @@ function App() {
       .then(response => response.json())
       .then((curPageDataObj) => {
 
-        const endpoint = 'http://localhost:8000/checkPageInWatchedList/'
+        const endpoint = 'http://localhost:8000/database/checkPageInWatchedList/'
 
         fetch(endpoint, {
           method: 'POST',
@@ -34,7 +34,7 @@ function App() {
         .then(response => response.json())
         .then(watchedEntries => {
 
-          const endpoint = 'http://localhost:8000/getCurrentPageMovieRatings/'
+          const endpoint = 'http://localhost:8000/database/getCurrentPageMovieRatings/'
 
           fetch(endpoint, {
             method: 'POST',

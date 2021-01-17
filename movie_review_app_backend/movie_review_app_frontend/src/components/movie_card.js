@@ -18,7 +18,7 @@ export default function MovieCard(props) {
         if(watchedMovieButtonColor === 'grey') {
             setWatchedMovieButtonColor('#ffb400')
 
-            const endpoint = 'http://localhost:8000/addToWatchedList/'
+            const endpoint = 'http://localhost:8000/database/addToWatchedList/'
 
             const data = {
                 movieId: id,
@@ -37,7 +37,7 @@ export default function MovieCard(props) {
         else {
             setWatchedMovieButtonColor('grey')
 
-            const endpoint = 'http://localhost:8000/removeFromWatchedList/'
+            const endpoint = 'http://localhost:8000/database/removeFromWatchedList/'
 
             const data = {
                 movieId: id
@@ -55,7 +55,7 @@ export default function MovieCard(props) {
     }
 
     const handleRating = (rating) => {
-        const endpoint = 'http://localhost:8000/updateMovieRating/'
+        const endpoint = 'http://localhost:8000/database/updateMovieRating/'
 
         const data = {
             movieId: props.id,
