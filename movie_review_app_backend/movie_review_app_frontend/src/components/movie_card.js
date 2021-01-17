@@ -14,12 +14,43 @@ export default function MovieCard(props) {
     const [watchedMovieButtonColor, setWatchedMovieButtonColor] = React.useState('grey')
     const [rating, setRating] = React.useState(2);
 
-    const toggleWatchedMovieButtonColor = () => {
+    const toggleWatchedMovieButtonColor = async(id, title) => {
         if(watchedMovieButtonColor === 'grey') {
             setWatchedMovieButtonColor('#ffb400')
+
+            const endpoint = 'http://localhost:8000/addToWatchedList/'
+
+            const data = {
+                movieId: id,
+                movieName: title,
+            }
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
         }
         else {
             setWatchedMovieButtonColor('grey')
+
+            const endpoint = 'http://localhost:8000/removeFromWatchedList/'
+
+            const data = {
+                movieId: id
+            }
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
         }
     }
 
@@ -59,7 +90,7 @@ export default function MovieCard(props) {
                 
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton style={{color: watchedMovieButtonColor}} onClick={()=>{toggleWatchedMovieButtonColor()}}>
+                <IconButton style={{color: watchedMovieButtonColor}} onClick={()=>{toggleWatchedMovieButtonColor(props.id, props.title)}}>
                     <VisibilityIcon />
                 </IconButton>
                 <Rating name={props.id} value={rating} onChange={(event, newRating) => {setRating(newRating);}}/>
