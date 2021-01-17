@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpRequest 
+from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import api_view
@@ -17,7 +17,7 @@ def addToWatchedList(request: HttpRequest):
     data = json.loads(request.body)
 
     if(WatchedMoviesDatabase.objects.filter(movieId = data['movieId']).exists()):
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        return JsonResponse({'message': 'Movie already present in the watched movies list'}, status=status.HTTP_403_FORBIDDEN)
 
     databaseEntry = WatchedMoviesDatabase(movieId = data['movieId'], movieName = data['movieName'])
     databaseEntry.save()
