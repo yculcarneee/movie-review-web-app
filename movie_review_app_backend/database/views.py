@@ -21,3 +21,12 @@ def addToWatchedList(request: HttpRequest):
 
     return Response(status=status.HTTP_200_OK)
 
+@api_view(["POST"])
+def removeFromWatchedList(request):
+
+    data = json.loads(request.body)
+
+    databaseEntry = WatchedMoviesDatabase.objects.get(movieId = data['movieId'])
+    databaseEntry.delete()
+
+    return Response(status=status.HTTP_200_OK)
