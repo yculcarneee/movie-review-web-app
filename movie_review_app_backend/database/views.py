@@ -16,6 +16,9 @@ def addToWatchedList(request: HttpRequest):
     
     data = json.loads(request.body)
 
+    if(WatchedMoviesDatabase.objects.filter(movieId = data['movieId']).exists()):
+        return Response(status=status.HTTP_403_FORBIDDEN)
+
     databaseEntry = WatchedMoviesDatabase(movieId = data['movieId'], movieName = data['movieName'])
     databaseEntry.save()
 
