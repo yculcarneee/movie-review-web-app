@@ -10,7 +10,7 @@ import json
 
 # Create your views here.
 @api_view(["GET"])
-def main(request, page=1):
+def movies(request, page=1):
 
     endpoint = 'https://api.themoviedb.org/3/discover/movie?api_key='+settings.TMDB_API_KEY+'&language=en-US&sort_by=popularity.desc&page='+str(page)
     response = requests.get(endpoint)
