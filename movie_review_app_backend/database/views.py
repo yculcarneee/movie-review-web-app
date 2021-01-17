@@ -30,3 +30,15 @@ def removeFromWatchedList(request):
     databaseEntry.delete()
 
     return Response(status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+def checkPageInWatchedList(request):
+
+    data = json.loads(request.body)
+
+    response = {}
+
+    for entry in data:
+        response[entry['id']] = WatchedMoviesDatabase.objects.filter(movieId = entry['id']).exists()
+
+    return Response(status=status.HTTP_200_OK, data=json.dumps(response))
