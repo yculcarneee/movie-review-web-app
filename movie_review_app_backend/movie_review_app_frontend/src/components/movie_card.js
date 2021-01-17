@@ -54,6 +54,26 @@ export default function MovieCard(props) {
         }
     }
 
+    const handleRating = (rating) => {
+        const endpoint = 'http://localhost:8000/updateMovieRating/'
+
+        const data = {
+            movieId: props.id,
+            movieName: props.title,
+            movieRating: rating
+        }
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json', 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        setRating(rating);
+    }
+
     const toggleOverviewText = () => {
         setIsExpanded(!isExpanded)
     }
@@ -93,7 +113,7 @@ export default function MovieCard(props) {
                 <IconButton style={{color: watchedMovieButtonColor}} onClick={()=>{toggleWatchedMovieButtonColor(props.id, props.title)}}>
                     <VisibilityIcon />
                 </IconButton>
-                <Rating name={props.id} value={rating} onChange={(event, newRating) => {setRating(newRating);}}/>
+                <Rating name={props.id} value={rating} onChange={(event, newRating) => {handleRating(newRating)}}/>
             </CardActions>
         </Card>
     )
