@@ -52,7 +52,7 @@ export default function MovieCard(props) {
                     {!isExpanded && needsExpansion ? expandedOverviewText : overviewText} 
                     {needsExpansion ? 
                         <Link onClick={()=>toggleOverviewText()}> 
-                            {isExpanded ? "Read less..." : "Read more..." } 
+                            {isExpanded ? " Read less..." : " Read more..." } 
                         </Link> : 
                         null}
                 </Typography>
