@@ -16,6 +16,12 @@ def addToWatchedList(request: HttpRequest):
     
     data = json.loads(request.body)
 
+    if('movieId' not in data.keys()):
+        return JsonResponse({'message': 'movieId field missing in recieved movie entry'}, status=status.HTTP_404_NOT_FOUND)
+
+    if('movieName' not in data.keys()):
+        return JsonResponse({'message': 'movieName field missing in recieved movie entry'}, status=status.HTTP_404_NOT_FOUND)
+
     if(WatchedMoviesDatabase.objects.filter(movieId = data['movieId']).exists()):
         return JsonResponse({'message': 'Movie already present in the watched movies list'}, status=status.HTTP_403_FORBIDDEN)
 
@@ -28,6 +34,9 @@ def addToWatchedList(request: HttpRequest):
 def removeFromWatchedList(request):
 
     data = json.loads(request.body)
+
+    if('movieId' not in data.keys()):
+        return JsonResponse({'message': 'movieId field missing in recieved movie entry'}, status=status.HTTP_404_NOT_FOUND)
 
     if(WatchedMoviesDatabase.objects.count() == 0):
         return JsonResponse({'message': 'Watched movies list is empty'}, status=status.HTTP_403_FORBIDDEN)
@@ -48,6 +57,9 @@ def checkPageInWatchedList(request):
     response = {}
 
     for entry in data:
+        if('id' not in entry.keys()):
+            return JsonResponse({'message': 'id field missing in recieved movie list'}, status=status.HTTP_404_NOT_FOUND)
+
         response[entry['id']] = WatchedMoviesDatabase.objects.filter(movieId = entry['id']).exists()
 
     return Response(status=status.HTTP_200_OK, data=json.dumps(response))
@@ -56,6 +68,15 @@ def checkPageInWatchedList(request):
 def updateMovieRating(request: HttpRequest):
     
     data = json.loads(request.body)
+
+    if('movieId' not in data.keys()):
+        return JsonResponse({'message': 'movieId field missing in recieved movie entry'}, status=status.HTTP_404_NOT_FOUND)
+
+    if('movieName' not in data.keys()):
+        return JsonResponse({'message': 'movieName field missing in recieved movie entry'}, status=status.HTTP_404_NOT_FOUND)
+
+    if('movieRating' not in data.keys()):
+        return JsonResponse({'message': 'movieRating field missing in recieved movie entry'}, status=status.HTTP_404_NOT_FOUND)
 
     database = MovieRatingDatabase(movieId = data['movieId'], movieName = data['movieName'], movieRating = data['movieRating'])
     database.save()
@@ -70,6 +91,9 @@ def getCurrentPageMovieRatings(request: HttpRequest):
     response = {}
 
     for entry in data:
+        if('id' not in entry.keys()):
+            return JsonResponse({'message': 'id field missing in recieved movie list'}, status=status.HTTP_404_NOT_FOUND)
+
         if(MovieRatingDatabase.objects.filter(movieId = entry['id']).exists()):
             response[entry['id']] = MovieRatingDatabase.objects.get(movieId = entry['id']).movieRating
         else:
