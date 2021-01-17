@@ -18,7 +18,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from apis.views import main
-from database.views import addToWatchedList, removeFromWatchedList, checkPageInWatchedList, updateMovieRating
+from database.views import addToWatchedList, removeFromWatchedList, checkPageInWatchedList, updateMovieRating, getCurrentPageMovieRatings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +29,5 @@ urlpatterns = [
     path('removeFromWatchedList/', removeFromWatchedList, name="removeFromWatchedList"),
     path('checkPageInWatchedList/', checkPageInWatchedList, name="checkPageInWatchedList"),
     path('updateMovieRating/', updateMovieRating, name="updateMovieRating"),
+    path('getCurrentPageMovieRatings/', getCurrentPageMovieRatings, name="getCurrentPageMovieRatings"),
 ]
