@@ -20,7 +20,33 @@ function App() {
     fetch(endpoint)
       .then(response => response.json())
       .then((curPageDataObj) => {
-        setCurPageData(curPageDataObj.results);
+
+        const endpoint = 'http://localhost:8000/checkPageInWatchedList/'
+
+        fetch(endpoint, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json', 
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(curPageDataObj.results)
+        })
+        .then(response => response.json())
+        .then(watchedEntries => {
+
+          watchedEntries = JSON.parse(watchedEntries)
+          
+          curPageDataObj.results.forEach(entry => {
+            if(entry['id'] in watchedEntries && watchedEntries[entry['id']]) {
+              entry['isWatched'] = true;
+            }
+            else {
+              entry['isWatched'] = false;
+            }
+          })
+          setCurPageData(curPageDataObj.results)
+        })
+      
         setTotalPages(curPageDataObj.total_pages);
         setIsLoaded(true);
       })
@@ -52,17 +78,10 @@ function App() {
           {
             curPageData.map(movie => (
               <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-                <MovieCard id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster}/>
+                <MovieCard key={movie.id} id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster} isWatched={movie.isWatched}/>
               </Grid>
             ))
           }
-          {/* <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-            <MovieCard id={curPageData[1].id} page={page} title={curPageData[1].title} overview={curPageData[1].overview} release_date={curPageData[1].release_date} poster={curPageData[1].poster}/>
-          </Grid> */}
-          
-          {/* <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-            <MovieCard id={curPageData[0].id} page={page} title={curPageData[0].title} overview={curPageData[0].overview} release_date={curPageData[0].release_date} poster={curPageData[0].poster}/>
-          </Grid> */}
         </Grid>
         <Box my={2} display="flex" justifyContent="center">
           <Typography>Page: {page}</Typography>
