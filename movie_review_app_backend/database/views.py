@@ -29,6 +29,12 @@ def removeFromWatchedList(request):
 
     data = json.loads(request.body)
 
+    if(WatchedMoviesDatabase.objects.count() == 0):
+        return JsonResponse({'message': 'Watched movies list is empty'}, status=status.HTTP_403_FORBIDDEN)
+
+    if(not WatchedMoviesDatabase.objects.filter(movieId = data['movieId']).exists()):
+        return JsonResponse({'message': 'Movie doesn\'t exist in the watched movies list'}, status=status.HTTP_403_FORBIDDEN)
+
     databaseEntry = WatchedMoviesDatabase.objects.get(movieId = data['movieId'])
     databaseEntry.delete()
 
