@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'apis'
+    'apis',
+    'database'
 ]
 
 MIDDLEWARE = [
@@ -85,8 +86,11 @@ WSGI_APPLICATION = 'movie_review_app_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'MovieReviewAppDB',
+        'USER': config('POSTGRES_USER', default=''),
+        'PASSWORD': config('POSTGRES_PASSWORD', default=''),
+        'HOST': 'localhost'
     }
 }
 
