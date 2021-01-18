@@ -114,10 +114,18 @@ export default function MovieCard(props) {
                 
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton style={{color: watchedMovieButtonColor}} onClick={()=>{toggleWatchedMovieButtonColor(props.id, props.title)}}>
-                    <VisibilityIcon />
-                </IconButton>
-                <Rating name={props.id} value={rating} onChange={(event, newRating) => {handleRating(newRating)}}/>
+                { 
+                    props.showWatchedIcon ? 
+                        <IconButton disabled={props.readOnlyWatchedIcon} style={{color: watchedMovieButtonColor}} onClick={()=>{toggleWatchedMovieButtonColor(props.id, props.title)}}>
+                            <VisibilityIcon />
+                        </IconButton> : 
+                        null 
+                }
+                {
+                    props.showRating ? 
+                        <Rating readOnly={props.readOnlyRating} name={props.id} value={rating} onChange={(event, newRating) => {handleRating(newRating)}}/> :
+                        null
+                }
             </CardActions>
         </Card>
     )
