@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
+from django.http import HttpRequest
 
 from rest_framework.response import Response
 from rest_framework import status
@@ -36,3 +37,15 @@ def movies(request, page=1):
         movies['results'].append(resultObj)
 
     return Response(status=status.HTTP_200_OK, data=movies)
+
+@api_view(["GET"])
+def getMoviePoster(request, movieId=1):
+    
+    endpoint = 'https://api.themoviedb.org/3/movie/' + str(movieId) + '?api_key=' + settings.TMDB_API_KEY + '&language=en-US'
+    response = requests.get(endpoint)
+    results = response.json()
+
+    poster = 'https://image.tmdb.org/t/p/w500' + results['poster_path']
+
+    return Response(status=status.HTTP_200_OK, data=poster)
+
