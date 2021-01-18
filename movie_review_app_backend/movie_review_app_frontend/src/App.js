@@ -3,7 +3,7 @@ import './App.css';
 import React from "react"
 
 import MovieCard from './components/movie_card';
-import {Grid, Typography, Box} from "@material-ui/core"
+import {Grid, Typography, Box, CircularProgress} from "@material-ui/core"
 import {Pagination} from "@material-ui/lab"
 
 function App() {
@@ -79,11 +79,14 @@ function App() {
 
   if(!isLoaded) {
     return (
-      <div>
-        <h1> Loading... </h1>
-      </div>
+      <Grid container direction="row" justify="center">
+        <Grid item>
+          <h1> Loading... </h1>
+          <CircularProgress size="7vw"/>
+        </Grid>
+      </Grid>
     )
-  }
+  } 
   else {
     return (
       <div>
