@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from django.urls import reverse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,6 +11,7 @@ from rest_framework import status
 from .models import WatchedMoviesDatabase, MovieRatingDatabase
 
 import json
+import requests
 
 # Create your views here.
 @api_view(["POST"])
@@ -100,3 +103,22 @@ def getCurrentPageMovieRatings(request: HttpRequest):
             response[entry['id']] = 0
 
     return Response(status=status.HTTP_200_OK, data=json.dumps(response))
+
+@api_view(["GET"])
+def getAllWatchedMoviesList(request: HttpRequest):
+    
+    watchedMoviesList = []
+
+    for entry in WatchedMoviesDatabase.objects.all():
+
+        watchedMoviesListEntry = {}
+
+        watchedMoviesListEntry['movieId'] = entry.movieId
+        watchedMoviesListEntry['movieName'] = entry.movieName
+
+        response = requests.get('http://127.0.0.1:8000/movies/getMoviePoster/'+str(entry.movieId))
+        watchedMoviesListEntry['poster'] = response.json()
+
+        watchedMoviesList.append(watchedMoviesListEntry)
+
+    return Response(status=status.HTTP_200_OK, data=watchedMoviesList)

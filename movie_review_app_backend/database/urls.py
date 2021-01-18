@@ -8,4 +8,5 @@ urlpatterns = [
     path('checkPageInWatchedList/', views.checkPageInWatchedList, name="checkPageInWatchedList"),
     path('updateMovieRating/', views.updateMovieRating, name="updateMovieRating"),
     path('getCurrentPageMovieRatings/', views.getCurrentPageMovieRatings, name="getCurrentPageMovieRatings"),
+    path('getAllWatchedMoviesList/', views.getAllWatchedMoviesList, name="getAllWatchedMoviesList"),
 ]
