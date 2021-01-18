@@ -3,7 +3,7 @@ import './App.css';
 import React from "react"
 
 import MovieCard from './components/movie_card';
-import {Grid, Typography, Box, CircularProgress} from "@material-ui/core"
+import {Grid, Typography, Box, CircularProgress, AppBar, Toolbar} from "@material-ui/core"
 import {Pagination} from "@material-ui/lab"
 
 function App() {
@@ -90,9 +90,14 @@ function App() {
   else {
     return (
       <div>
-        <Grid container direction="row" align="center">
+        <AppBar>
+          <Toolbar>
+              Movie Review App 
+          </Toolbar>
+        </AppBar>
+        <Grid style={{marginTop: '10vh'}} container direction="row" align="center">
           <Grid item lg={12} xs={12}>
-            <h1> Movie Review App </h1>
+            
           </Grid>
           {
             curPageData.map(movie => (
