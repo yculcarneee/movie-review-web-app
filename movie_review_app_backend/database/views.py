@@ -111,15 +111,10 @@ def getAllWatchedMoviesList(request: HttpRequest):
 
     for entry in WatchedMoviesDatabase.objects.all():
 
-        watchedMoviesListEntry = {}
+        response = requests.get('http://127.0.0.1:8000/movies/getMovieDetails/'+str(entry.movieId))
+        results = response.json()
 
-        watchedMoviesListEntry['movieId'] = entry.movieId
-        watchedMoviesListEntry['movieName'] = entry.movieName
-
-        response = requests.get('http://127.0.0.1:8000/movies/getMoviePoster/'+str(entry.movieId))
-        watchedMoviesListEntry['poster'] = response.json()
-
-        watchedMoviesList.append(watchedMoviesListEntry)
+        watchedMoviesList.append(results)
 
     return Response(status=status.HTTP_200_OK, data=watchedMoviesList)
 
@@ -130,15 +125,11 @@ def getAllRatedMoviesList(request: HttpRequest):
 
     for entry in MovieRatingDatabase.objects.all():
 
-        ratedMoviesListEntry = {}
+        response = requests.get('http://127.0.0.1:8000/movies/getMovieDetails/'+str(entry.movieId))
+        results = response.json()
 
-        ratedMoviesListEntry['movieId'] = entry.movieId
-        ratedMoviesListEntry['movieName'] = entry.movieName
-        ratedMoviesListEntry['movieRating'] = entry.movieRating
+        results['movieRating'] = entry.movieRating
 
-        response = requests.get('http://127.0.0.1:8000/movies/getMoviePoster/'+str(entry.movieId))
-        ratedMoviesListEntry['poster'] = response.json()
-
-        ratedMoviesList.append(ratedMoviesListEntry)
+        ratedMoviesList.append(results)
 
     return Response(status=status.HTTP_200_OK, data=ratedMoviesList)
