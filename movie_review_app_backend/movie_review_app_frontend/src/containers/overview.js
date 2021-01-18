@@ -27,7 +27,7 @@ export default function Overview() {
                 fetch(endpoint)
                     .then(response => response.json())
                     .then(ratedMoviesList => {
-                        console.log(ratedMoviesList)
+                        // console.log(ratedMoviesList)
                         setRatedMovieList(ratedMoviesList)
                         setIsLoaded(true);
                     })
@@ -57,7 +57,7 @@ export default function Overview() {
                     {
                         watchedMoviesList.map(movie => (
                             <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-                                <MovieCard key={movie.id} id={movie.movieId} title={movie.movieName} overview={""} poster={movie.poster}/>
+                                <MovieCard key={movie.id} readOnlyWatchedIcon={true} id={movie.movieId} title={movie.movieName} overview={movie.movieOverview} release_date={movie.movieReleaseDate} poster={movie.moviePoster} isWatched={true} showWatchedIcon={true} showRating={false}/>
                             </Grid>
                         ))
                     }
@@ -67,7 +67,7 @@ export default function Overview() {
                     {
                         ratedMoviesList.map(movie => (
                             <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-                                <MovieCard key={movie.id} id={movie.movieId} title={movie.movieName} rating={movie.movieRating} overview={""} poster={movie.poster}/>
+                                <MovieCard key={movie.id} readOnlyRating={true} id={movie.movieId} title={movie.movieName} overview={movie.movieOverview} release_date={movie.movieReleaseDate} poster={movie.moviePoster} rating={movie.movieRating} showWatchedIcon={false} showRating={true}/>
                             </Grid>
                         ))
                     }
