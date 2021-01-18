@@ -122,3 +122,23 @@ def getAllWatchedMoviesList(request: HttpRequest):
         watchedMoviesList.append(watchedMoviesListEntry)
 
     return Response(status=status.HTTP_200_OK, data=watchedMoviesList)
+
+@api_view(["GET"])
+def getAllRatedMoviesList(request: HttpRequest):
+    
+    ratedMoviesList = []
+
+    for entry in MovieRatingDatabase.objects.all():
+
+        ratedMoviesListEntry = {}
+
+        ratedMoviesListEntry['movieId'] = entry.movieId
+        ratedMoviesListEntry['movieName'] = entry.movieName
+        ratedMoviesListEntry['movieRating'] = entry.movieRating
+
+        response = requests.get('http://127.0.0.1:8000/movies/getMoviePoster/'+str(entry.movieId))
+        ratedMoviesListEntry['poster'] = response.json()
+
+        ratedMoviesList.append(ratedMoviesListEntry)
+
+    return Response(status=status.HTTP_200_OK, data=ratedMoviesList)
