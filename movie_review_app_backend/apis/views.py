@@ -39,13 +39,18 @@ def movies(request, page=1):
     return Response(status=status.HTTP_200_OK, data=movies)
 
 @api_view(["GET"])
-def getMoviePoster(request, movieId=1):
+def getMovieDetails(request, movieId=1):
     
     endpoint = 'https://api.themoviedb.org/3/movie/' + str(movieId) + '?api_key=' + settings.TMDB_API_KEY + '&language=en-US'
     response = requests.get(endpoint)
     results = response.json()
 
-    poster = 'https://image.tmdb.org/t/p/w500' + results['poster_path']
+    movieDetails = {}
 
-    return Response(status=status.HTTP_200_OK, data=poster)
+    movieDetails['movieName'] = results['title']
+    movieDetails['movieOverview'] = results['overview']
+    movieDetails['movieReleaseDate'] = results['release_date']
+    movieDetails['moviePoster'] = 'https://image.tmdb.org/t/p/w500' + results['poster_path']
+
+    return Response(status=status.HTTP_200_OK, data=movieDetails)
 
