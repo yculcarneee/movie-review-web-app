@@ -5,10 +5,14 @@ export default function Navbar(props) {
     return (
         <AppBar>
             <Toolbar>
-                <Typography variant="h6" style={{flexGrow: 1}}>
-                    Movie Review App 
-                </Typography>
-                <Button component={Link} to="/overview" color="inherit">
+                <div style={{flexGrow: 1}}>
+                    <Button component={Link} to="/" color="inherit" style={{textTransform: 'none'}}>
+                        <Typography variant="h5">
+                            Movie Review App 
+                        </Typography>  
+                    </Button>
+                </div>
+                <Button component={Link} to="/overview" color="inherit" style={{textTransform: 'none'}}>
                     Overview
                 </Button>
             </Toolbar>
