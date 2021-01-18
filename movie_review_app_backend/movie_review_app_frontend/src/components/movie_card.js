@@ -88,7 +88,7 @@ export default function MovieCard(props) {
             setExpandedOverviewText(props.overview.substring(0, 150));
         }
         setOverviewText(props.overview)
-    }, [overviewText])
+    }, [props.rating, props.isWatched, props.overview, overviewText])
 
     return (
         <Card style={{maxWidth: '340px', minHeight: '500px'}}>

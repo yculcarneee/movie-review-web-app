@@ -18,10 +18,12 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from django.urls import include, path
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html')),
     path('movies/', include('apis.urls')),
-    path('database/', include('database.urls'))
+    path('database/', include('database.urls')),
+    url(r'^(?:.*)/?$', TemplateView.as_view(template_name='index.html'))
 ]
