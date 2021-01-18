@@ -6,6 +6,7 @@ import MovieCard from '../components/movie_card';
 import {Grid, Typography, Box, CircularProgress} from "@material-ui/core"
 import {Pagination} from "@material-ui/lab"
 import Navbar from '../components/navbar';
+import Loading from '../components/loading';
 
 export default function Main() {
 
@@ -80,12 +81,7 @@ export default function Main() {
 
   if(!isLoaded) {
     return (
-      <Grid container direction="row" justify="center">
-        <Grid item>
-          <h1> Loading... </h1>
-          <CircularProgress size="7vw"/>
-        </Grid>
-      </Grid>
+      <Loading/>
     )
   } 
   else {
