@@ -95,7 +95,7 @@ export default function Main() {
           {
             curPageData.map(movie => (
               <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-                <MovieCard key={movie.id} id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster} rating={movie.rating} isWatched={movie.isWatched}/>
+                <MovieCard key={movie.id} readOnlyRating={false} readOnlyWatchedIcon={false} id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster} rating={movie.rating} isWatched={movie.isWatched} showWatchedIcon={true} showRating={true}/>
               </Grid>
             ))
           }
