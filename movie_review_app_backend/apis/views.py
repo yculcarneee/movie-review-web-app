@@ -47,6 +47,7 @@ def getMovieDetails(request, movieId=1):
 
     movieDetails = {}
 
+    movieDetails['movieId'] = str(movieId)
     movieDetails['movieName'] = results['title']
     movieDetails['movieOverview'] = results['overview']
     movieDetails['movieReleaseDate'] = results['release_date']
