@@ -123,7 +123,7 @@ export default function MovieCard(props) {
                 }
                 {
                     props.showRating ? 
-                        <Rating readOnly={props.readOnlyRating} name={toString(props.id)} value={rating} onChange={(event, newRating) => {handleRating(newRating)}}/> :
+                        <Rating readOnly={props.readOnlyRating} name={props.id.toString()} value={rating} onChange={(event, newRating) => {handleRating(newRating)}}/> :
                         null
                 }
             </CardActions>
