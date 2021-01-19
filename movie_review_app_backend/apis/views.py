@@ -28,11 +28,30 @@ def movies(request, page=1):
     for obj in data['results']:
         resultObj = {}
 
-        resultObj['id'] = obj['id']
-        resultObj['title'] = obj['title']
-        resultObj['overview'] = obj['overview']
-        resultObj['release_date'] = obj['release_date']
-        resultObj['poster'] = 'https://image.tmdb.org/t/p/w500' + obj['poster_path']
+        if(obj['id']):
+            resultObj['id'] = obj['id']
+        else:
+            resultObj['id'] = Math.random() * 100000
+
+        if(obj['title']):
+            resultObj['title'] = obj['title']
+        else:
+            resultObj['title'] = 'Title not available'
+
+        if(obj['overview']):
+            resultObj['overview'] = obj['overview']
+        else:
+            resultObj['overview'] = 'Overview not available'
+
+        if(obj['release_date']):
+            resultObj['release_date'] = obj['release_date']
+        else:
+            resultObj['release_date'] = 'Release date not available'
+
+        if(obj['poster_path']):
+            resultObj['poster'] = 'https://image.tmdb.org/t/p/w500' + obj['poster_path']
+        else:
+            resultObj['poster'] = 'https://via.placeholder.com/500'
 
         movies['results'].append(resultObj)
 
@@ -48,10 +67,26 @@ def getMovieDetails(request, movieId=1):
     movieDetails = {}
 
     movieDetails['movieId'] = str(movieId)
-    movieDetails['movieName'] = results['title']
-    movieDetails['movieOverview'] = results['overview']
-    movieDetails['movieReleaseDate'] = results['release_date']
-    movieDetails['moviePoster'] = 'https://image.tmdb.org/t/p/w500' + results['poster_path']
+
+    if(results['title']):
+        movieDetails['movieName'] = results['title']
+    else:
+        movieDetails['movieName'] = 'Title not available'
+
+    if(results['overview']):
+        movieDetails['movieOverview'] = results['overview']
+    else:
+        movieDetails['movieOverview'] = 'Overview not available'
+
+    if(results['release_date']):
+        movieDetails['movieReleaseDate'] = results['release_date']
+    else:
+        movieDetails['movieReleaseDate'] = 'Release date not available'
+    
+    if(results['poster_path']):
+        movieDetails['moviePoster'] = 'https://image.tmdb.org/t/p/w500' + results['poster_path']
+    else:
+        movieDetails['moviePoster'] = 'https://via.placeholder.com/500'
 
     return Response(status=status.HTTP_200_OK, data=movieDetails)
 
