@@ -65,7 +65,7 @@ def checkPageInWatchedList(request):
 
         response[entry['id']] = WatchedMoviesDatabase.objects.filter(movieId = entry['id']).exists()
 
-    return Response(status=status.HTTP_200_OK, data=json.dumps(response))
+    return Response(status=status.HTTP_200_OK, data=response)
 
 @api_view(["POST"])
 def updateMovieRating(request: HttpRequest):
@@ -102,7 +102,7 @@ def getCurrentPageMovieRatings(request: HttpRequest):
         else:
             response[entry['id']] = 0
 
-    return Response(status=status.HTTP_200_OK, data=json.dumps(response))
+    return Response(status=status.HTTP_200_OK, data=response)
 
 @api_view(["GET"])
 def getAllWatchedMoviesList(request: HttpRequest):
