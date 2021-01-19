@@ -17,12 +17,11 @@ export default function Main() {
 
   const getCurPageData = async() => {
 
-    const endpoint = 'http://localhost:8000/movies/page' + page;
+    const endpoint = 'http://localhost:8000/movies/page' + page + '/';
 
     fetch(endpoint)
       .then(response => response.json())
       .then((curPageDataObj) => {
-
         const endpoint = 'http://localhost:8000/database/checkPageInWatchedList/'
 
         fetch(endpoint, {
@@ -49,8 +48,8 @@ export default function Main() {
           .then(response => response.json())
           .then(movieRatingEntries => {
 
-            watchedEntries = JSON.parse(watchedEntries)
-            movieRatingEntries = JSON.parse(movieRatingEntries)
+            // watchedEntries = JSON.parse(watchedEntries)
+            // movieRatingEntries = JSON.parse(movieRatingEntries)
           
             curPageDataObj.results.forEach(entry => {
               if(entry['id'] in watchedEntries && watchedEntries[entry['id']]) {
@@ -64,7 +63,6 @@ export default function Main() {
             setCurPageData(curPageDataObj.results)
           })
         })
-      
         setTotalPages(curPageDataObj.total_pages);
         setIsLoaded(true);
       })
@@ -89,12 +87,9 @@ export default function Main() {
       <div>
         <Navbar/>
         <Grid style={{marginTop: '8vh'}} container direction="row" align="center">
-          <Grid item lg={12} xs={12}>
-            
-          </Grid>
           {
             curPageData.map(movie => (
-              <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
+              <Grid key={movie.id} item xs={12} lg={3} style={{padding: '3vh'}}>
                 <MovieCard key={movie.id} readOnlyRating={false} readOnlyWatchedIcon={false} id={movie.id} page={page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster} rating={movie.rating} isWatched={movie.isWatched} showWatchedIcon={true} showRating={true}/>
               </Grid>
             ))
