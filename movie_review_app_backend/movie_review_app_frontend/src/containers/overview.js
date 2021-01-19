@@ -49,25 +49,23 @@ export default function Overview() {
             <div>
                 <Navbar/>
                 <Grid style={{marginTop: '8vh'}} container direction="row" align="center">
-                    <Grid item lg={12} xs={12}>
-                        <h1> Overview </h1>
-                        
-                        <h2> Watched Movies List </h2>
+                    <Grid key="Watched Movies List Heading" item lg={12} xs={12}>
+                        <h1> Watched Movies List </h1>
                     </Grid>
                     {
                         watchedMoviesList.map(movie => (
-                            <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-                                <MovieCard key={movie.id} readOnlyWatchedIcon={true} id={movie.movieId} title={movie.movieName} overview={movie.movieOverview} release_date={movie.movieReleaseDate} poster={movie.moviePoster} isWatched={true} showWatchedIcon={true} showRating={false}/>
+                            <Grid item key={"watchedMovies-"+movie.movieId} xs={12} lg={3} style={{padding: '3vh'}}>
+                                <MovieCard key={movie.movieId} readOnlyWatchedIcon={true} id={movie.movieId} title={movie.movieName} overview={movie.movieOverview} release_date={movie.movieReleaseDate} poster={movie.moviePoster} isWatched={true} showWatchedIcon={true} showRating={false}/>
                             </Grid>
                         ))
                     }
-                    <Grid item lg={12} xs={12}>
-                        <h2> Rated Movies List </h2>
+                    <Grid key="Rated Movies List Heading" item lg={12} xs={12}>
+                        <h1> Rated Movies List </h1>
                     </Grid>
                     {
                         ratedMoviesList.map(movie => (
-                            <Grid item xs={12} lg={3} style={{padding: '3vh'}}>
-                                <MovieCard key={movie.id} readOnlyRating={true} id={movie.movieId} title={movie.movieName} overview={movie.movieOverview} release_date={movie.movieReleaseDate} poster={movie.moviePoster} rating={movie.movieRating} showWatchedIcon={false} showRating={true}/>
+                            <Grid item key={"ratedMovies-"+movie.movieId} xs={12} lg={3} style={{padding: '3vh'}}>
+                                <MovieCard key={movie.movieId} readOnlyRating={true} id={movie.movieId} title={movie.movieName} overview={movie.movieOverview} release_date={movie.movieReleaseDate} poster={movie.moviePoster} rating={movie.movieRating} showWatchedIcon={false} showRating={true}/>
                             </Grid>
                         ))
                     }
