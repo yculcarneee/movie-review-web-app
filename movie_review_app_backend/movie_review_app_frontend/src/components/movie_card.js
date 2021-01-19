@@ -97,6 +97,7 @@ export default function MovieCard(props) {
                 subheader={props.release_date}
             />
             <CardMedia
+                aria-label={props.title}
                 component="img"
                 height="300px"
                 image={props.poster}
