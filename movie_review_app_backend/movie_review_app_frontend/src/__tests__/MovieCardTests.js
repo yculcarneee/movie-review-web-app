@@ -34,7 +34,6 @@ describe('MovieCard Component', () => {
     render(<MovieCard key={movie.id} readOnlyRating={movie.readOnlyRating} readOnlyWatchedIcon={movie.readOnlyWatchedIcon} id={movie.id} page={movie.page} title={movie.title} overview={movie.overview} release_date={movie.release_date} poster={movie.poster} rating={movie.rating} isWatched={movie.isWatched} showWatchedIcon={movie.showWatchedIcon} showRating={movie.showRating} />);
 
     expect(screen.getByRole('img')).toBeInTheDocument()
-    expect(screen.getByRole('img').src).toBe(movie.poster)
   });
 
   test('Movie Poster content matches passed one', async() => {
