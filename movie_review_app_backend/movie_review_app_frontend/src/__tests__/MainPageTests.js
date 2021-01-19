@@ -81,13 +81,13 @@ describe('Main Page', () => {
         expect(screen.getByText(moviesInCurPageResponse.results[1].title)).toBeInTheDocument()
 
         expect(screen.getByText(moviesInCurPageResponse.results[0].overview)).toBeInTheDocument()
-        expect(screen.getByText(moviesInCurPageResponse.results[0].overview)).toBeInTheDocument()
+        expect(screen.getByText(moviesInCurPageResponse.results[1].overview)).toBeInTheDocument()
 
         expect(screen.getByText(moviesInCurPageResponse.results[0].release_date)).toBeInTheDocument()
-        expect(screen.getByText(moviesInCurPageResponse.results[0].release_date)).toBeInTheDocument()
+        expect(screen.getByText(moviesInCurPageResponse.results[1].release_date)).toBeInTheDocument()
 
-        expect(screen.getAllByRole('img')[0].src).toBe(moviesInCurPageResponse.results[0].poster)
-        expect(screen.getAllByRole('img')[1].src).toBe(moviesInCurPageResponse.results[1].poster)
+        expect(screen.getByLabelText(moviesInCurPageResponse.results[0].title)).toBeInTheDocument()
+        expect(screen.getByLabelText(moviesInCurPageResponse.results[1].title)).toBeInTheDocument()
 
         expect(screen.queryAllByRole('radio')).not.toBeNull() 
     })
