@@ -15,12 +15,21 @@ export default function Main() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [curPageData, setCurPageData] = React.useState([]);
 
+  const checkError = (response) => {
+    if(response.status == 200) {
+      return response.json()
+    }
+    else {
+      throw Error("Error in retrieving movies list")
+    }
+  }
+
   const getCurPageData = async() => {
 
     const endpoint = 'http://localhost:8000/movies/page' + page + '/';
 
     fetch(endpoint)
-      .then(response => response.json())
+      .then(checkError).catch((error) => alert(error))
       .then((curPageDataObj) => {
         const endpoint = 'http://localhost:8000/database/checkPageInWatchedList/'
 
@@ -32,7 +41,7 @@ export default function Main() {
           },
           body: JSON.stringify(curPageDataObj.results)
         })
-        .then(response => response.json())
+        .then(checkError).catch((error) => alert(error))
         .then(watchedEntries => {
 
           const endpoint = 'http://localhost:8000/database/getCurrentPageMovieRatings/'
@@ -45,7 +54,7 @@ export default function Main() {
             },
             body: JSON.stringify(curPageDataObj.results)
           })
-          .then(response => response.json())
+          .then(checkError).catch((error) => alert(error))
           .then(movieRatingEntries => {
 
             // watchedEntries = JSON.parse(watchedEntries)
