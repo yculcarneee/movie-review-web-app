@@ -9,22 +9,31 @@ from rest_framework.decorators import api_view
 import requests
 import json
 
-# Create your views here.
+# movies/ endpoint fetches most popular movies from TMDB based on given page name and returns filtered results
 @api_view(["GET"])
 def movies(request, page=1):
 
+    # Fetch most popular movies from TMDB based on given page name
     endpoint = 'https://api.themoviedb.org/3/discover/movie?api_key='+settings.TMDB_API_KEY+'&language=en-US&sort_by=popularity.desc&page='+str(page)
-    response = requests.get(endpoint)
+    
+    try:
+        response = requests.get(endpoint)
+    except (requests.ConnectTimeout, requests.HTTPError, requests.ReadTimeout, requests.Timeout, requests.ConnectionError):
+        return Response(status=status.HTTP_408_TIMEOUT, data={})
+    
 
     data = response.json()
 
+    # Response object to be sent by API
     movies = {}
 
+    # Extract page number, total number of pages, total number of results from recieved data
     movies['page'] = data['page']
     movies['total_pages'] = data['total_pages']
     movies['total_results'] = data['total_results']
     movies['results'] = []
 
+    # Extract movie id, title, overview, release date and poster path from results array 
     for obj in data['results']:
         resultObj = {}
 
@@ -57,17 +66,21 @@ def movies(request, page=1):
 
     return Response(status=status.HTTP_200_OK, data=movies)
 
+# getMovieDetails/ endpoint fetches movie details from TMDB such as movie name, overview, releae date, and poster path and returns result object
 @api_view(["GET"])
 def getMovieDetails(request, movieId=1):
     
+    # Fetch movie details from TMDB based on movie id
     endpoint = 'https://api.themoviedb.org/3/movie/' + str(movieId) + '?api_key=' + settings.TMDB_API_KEY + '&language=en-US'
     response = requests.get(endpoint)
     results = response.json()
 
+    # Response object to be sent by API
     movieDetails = {}
 
     movieDetails['movieId'] = str(movieId)
 
+    # Filter out movie name, overview, release date, and poster path from results object and copy it into movieDetails object
     if(results['title']):
         movieDetails['movieName'] = results['title']
     else:
