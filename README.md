@@ -26,6 +26,7 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+- [Usage](#usage)
 - [Contact](#contact)
 - [Resources used in development](#resources-used-in-development)
 <br/><br/>
@@ -132,14 +133,35 @@ python manage.py tests database
 ```
 npm run test
 ```
-<!-- USAGE EXAMPLES
+
 ## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_ -->
-
+<details>
+  <summary> 1. Browsing through different pages </summary>
+  <img src="movie-review-web-app/movie_review_app_backend/../../movie_review_app_backend/assets/gifs/Browsing through different pages.gif"  alt="Browsing through different pages">
+</details>  
+<br/>
+<details>
+  <summary> 2. Add a new movie to the Watched Movies List </summary>
+  <img src="movie-review-web-app/movie_review_app_backend/../../movie_review_app_backend/assets/gifs/Add movie to watched list.gif"  alt="Add a new movie to the Watched Movies List">
+</details>  
+<br/>
+<details>
+  <summary> 3. Remove a movie from the Watched List </summary>
+  <img src="movie-review-web-app/movie_review_app_backend/../../movie_review_app_backend/assets/gifs/Remove movie from watched list.gif"  alt="Remove a movie from the Watched Movies List">
+</details>
+<br/>
+<details>
+  <summary> 4. Add a new movie to the Rated Movies List </summary>
+  <img src="movie-review-web-app/movie_review_app_backend/../../movie_review_app_backend/assets/gifs/Add movie to rated movies list.gif"  alt="Add a new movie to the Rated Movies List">
+</details>
+<br/>
+<details>
+  <summary> 5. Update the rating of a movie in the Rated Movies List </summary>
+  <img src="movie-review-web-app/movie_review_app_backend/../../movie_review_app_backend/assets/gifs/Update rating of movie.gif"  alt="Update the rating of a movie in the Rated Movies List">
+</details>
+<br/>
 <!-- CONTACT -->
+
 ## Contact
 
 Yash Kulkarni - [LinkedIn](https://www.linkedin.com/in/yashkulkarni97/) - yukulkar@uci.edu
