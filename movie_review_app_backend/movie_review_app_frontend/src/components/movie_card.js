@@ -18,6 +18,7 @@ export default function MovieCard(props) {
         if(watchedMovieButtonColor === 'grey') {
             setWatchedMovieButtonColor('#ffb400')
 
+            // Add entry into WatchedMoviesDatabase using addToWatchedList/ endpoint
             const endpoint = 'http://localhost:8000/database/addToWatchedList/'
 
             const data = {
@@ -37,6 +38,7 @@ export default function MovieCard(props) {
         else {
             setWatchedMovieButtonColor('grey')
 
+            // Remove entry from WatchedMoviesDatabase using removeFromWatchedList/ endpoint
             const endpoint = 'http://localhost:8000/database/removeFromWatchedList/'
 
             const data = {
@@ -55,6 +57,7 @@ export default function MovieCard(props) {
     }
 
     const handleRating = (rating) => {
+        // Add/update movie rating in MovieRatingDatabase using updateMovieRating/ endpoint
         const endpoint = 'http://localhost:8000/database/updateMovieRating/'
 
         const data = {
@@ -83,10 +86,13 @@ export default function MovieCard(props) {
         if(props.isWatched) {
             setWatchedMovieButtonColor('#ffb400')
         }
+
+        // If overview text length is too long, enable Read more option
         if(props.overview.length > 150) {
             setNeedsExpansion(true);
             setExpandedOverviewText(props.overview.substring(0, 150));
         }
+        
         setOverviewText(props.overview)
     }, [props.rating, props.isWatched, props.overview, overviewText])
 

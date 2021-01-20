@@ -26,11 +26,14 @@ export default function Main() {
 
   const getCurPageData = async() => {
 
+    // Load current page movie details from movies/ endpoint
     const endpoint = 'http://localhost:8000/movies/page' + page + '/';
 
     fetch(endpoint)
       .then(checkError).catch((error) => alert(error))
       .then((curPageDataObj) => {
+
+        // Load all entries in the current page that are present in WatchedMoviesDatabase
         const endpoint = 'http://localhost:8000/database/checkPageInWatchedList/'
 
         fetch(endpoint, {
@@ -44,6 +47,7 @@ export default function Main() {
         .then(checkError).catch((error) => alert(error))
         .then(watchedEntries => {
 
+          // Load all entries in the current page that are present in MovieRatingDatabase
           const endpoint = 'http://localhost:8000/database/getCurrentPageMovieRatings/'
 
           fetch(endpoint, {
@@ -60,6 +64,7 @@ export default function Main() {
             // watchedEntries = JSON.parse(watchedEntries)
             // movieRatingEntries = JSON.parse(movieRatingEntries)
           
+            // Set isWatched prop based on response from checkPageInWatchedList/ and rating prop based on response from getCurrentPageMovieRatings/
             curPageDataObj.results.forEach(entry => {
               if(entry['id'] in watchedEntries && watchedEntries[entry['id']]) {
                 entry['isWatched'] = true;
@@ -69,6 +74,7 @@ export default function Main() {
               }
               entry['rating'] = movieRatingEntries[entry['id']]
             })
+
             setCurPageData(curPageDataObj.results)
           })
         })

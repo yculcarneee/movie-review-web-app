@@ -14,6 +14,7 @@ export default function Overview() {
 
     const getCurPageData = async() => {
 
+        // Load all entries present in WatchedMoviesDatabase from getAllWatchedMoviesList/ endpoint
         const endpoint = 'http://localhost:8000/database/getAllWatchedMoviesList/';
 
         fetch(endpoint)
@@ -22,6 +23,7 @@ export default function Overview() {
                 // console.log(watchedMoviesList)
                 setWatchedMovieList(watchedMoviesList)
 
+                // Load all entries present in MovieRatingDatabase from getAllRatedMoviesList/ endpoint
                 const endpoint = 'http://localhost:8000/database/getAllRatedMoviesList/';
 
                 fetch(endpoint)
