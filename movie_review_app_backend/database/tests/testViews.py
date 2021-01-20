@@ -6,7 +6,7 @@ from database.models import WatchedMoviesDatabase, MovieRatingDatabase
 import json
 
 class TestViews(TestCase):
-
+    # Test checks if addToWatchedList/ actually adds an entry in the database
     def testAddToWatchedListView(self):
         
         response = self.client.post(reverse('addToWatchedList'), 
@@ -17,6 +17,7 @@ class TestViews(TestCase):
         self.assertEquals(WatchedMoviesDatabase.objects.get().movieName, 'DummyMovieName')
         self.assertEquals(WatchedMoviesDatabase.objects.get().movieId, 1)
 
+    # Test checks if addToWatchedList/ verifies that movieId attribute is present in the request body
     def testAddToWatchedListView_MovieIdFieldMissing(self):
 
         response = self.client.post(reverse('addToWatchedList'), 
@@ -28,6 +29,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 404)
         self.assertEquals(results['message'], 'movieId field missing in recieved movie entry')
 
+    # Test checks if addToWatchedList/ verifies that movieName attribute is present in the request body
     def testAddToWatchedListView_MovieNameFieldMissing(self):
 
         response = self.client.post(reverse('addToWatchedList'), 
@@ -38,7 +40,8 @@ class TestViews(TestCase):
 
         self.assertEquals(response.status_code, 404)
         self.assertEquals(results['message'], 'movieName field missing in recieved movie entry')
-
+    
+    # Test checks if addToWatchedList/ verifies that movie in the request body is already present in the WatchedMovieDatabase
     def testAddToWatchedListView_MovieAlreadyPresent(self):
 
         self.testAddToWatchedListView()
@@ -52,6 +55,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 403)
         self.assertEquals(results['message'], 'Movie already present in the watched movies list')
     
+    # Test checks if removeFromWatchedList/ actually removes an entry from the database
     def testRemoveFromWatchedListView(self):
 
         WatchedMoviesDatabase.objects.create(
@@ -68,6 +72,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(WatchedMoviesDatabase.objects.count(), 0)
 
+    # Test checks if removeFromWatchedList/ verifies that movieId attribute is present in the request body
     def testRemoveFromWatchedListView_MovieIdFieldMissing(self):
 
         response = self.client.post(reverse('addToWatchedList'), 
@@ -79,6 +84,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 404)
         self.assertEquals(results['message'], 'movieId field missing in recieved movie entry')
 
+    # Test checks if removeFromWatchedList/ verifies that WatchedMoviesDatabase is not empty before attempting to remove entry
     def testRemoveFromWatchedListView_DatabaseEmpty(self):
 
         response = self.client.post(reverse('removeFromWatchedList'), 
@@ -90,6 +96,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 403)
         self.assertEquals(results['message'], 'Watched movies list is empty')
 
+    # Test checks if removeFromWatchedList/ verifies that movie is not present in the database before attempting to remove that entry
     def testRemoveFromWatchedListView_MovieNotPresent(self):
 
         WatchedMoviesDatabase.objects.create(
@@ -106,6 +113,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 403)
         self.assertEquals(results['message'], 'Movie doesn\'t exist in the watched movies list')
 
+    # Test checks if checkPageInWatchedList/ correctly returns True or False values based on entries in the database
     def testCheckPageInWatchedListView(self):
         
         WatchedMoviesDatabase.objects.bulk_create(
@@ -128,6 +136,7 @@ class TestViews(TestCase):
         self.assertEquals(result['4'], False)
         self.assertEquals(result['5'], False)
 
+    # Test checks if checkPageInWatchedList/ verifies that movieId attribute is present in the request body
     def testCheckPageInWatchedListView_IdFieldMissing(self):
         
         response = self.client.post(reverse('checkPageInWatchedList'), 
@@ -139,6 +148,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 404)
         self.assertEquals(results['message'], 'id field missing in recieved movie list')
 
+    # Test checks if updateMovieRating/ updates the entry corresponding to the given movieId in MovieRatingDatabase
     def testUpdateMovieRatingView(self):
 
         MovieRatingDatabase.objects.create(
@@ -156,6 +166,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(MovieRatingDatabase.objects.get().movieRating, 5)
 
+    # Test checks if updateMovieRating/ verifies that movieId attribute is present in the request body
     def testUpdateMovieRatingView_MovieIdFieldMissing(self):
 
         response = self.client.post(reverse('updateMovieRating'), 
@@ -167,6 +178,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 404)
         self.assertEquals(results['message'], 'movieId field missing in recieved movie entry')
 
+    # Test checks if updateMovieRating/ verifies that movieName attribute is present in the request body
     def testUpdateMovieRatingView_MovieNameFieldMissing(self):
 
         response = self.client.post(reverse('updateMovieRating'), 
@@ -177,7 +189,8 @@ class TestViews(TestCase):
 
         self.assertEquals(response.status_code, 404)
         self.assertEquals(results['message'], 'movieName field missing in recieved movie entry')
-
+    
+    # Test checks if updateMovieRating/ verifies that movieRating attribute is present in the request body
     def testUpdateMovieRatingView_MovieRatingFieldMissing(self):
 
         response = self.client.post(reverse('updateMovieRating'), 
@@ -189,6 +202,7 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 404)
         self.assertEquals(results['message'], 'movieRating field missing in recieved movie entry')
 
+    # Test checks if getCurrentPageMovieRatings/ returns the ratings of movies mentioned in the request body
     def testGetCurrentPageMovieRatingsView(self):
 
         MovieRatingDatabase.objects.bulk_create(
@@ -214,6 +228,7 @@ class TestViews(TestCase):
         self.assertEquals(result['5'], 1)
         self.assertEquals(result['6'], 0)
 
+    # Test checks if getCurrentPageMovieRatings/ verifies that movieId attribute is present in the request body
     def testGetCurrentPageMovieRatingsView_MovieIdFieldMissing(self):
         
         response = self.client.post(reverse('getCurrentPageMovieRatings'), 

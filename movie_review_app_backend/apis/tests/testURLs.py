@@ -15,5 +15,5 @@ class TestURLs(SimpleTestCase):
         self.assertEquals(resolve(url).func, movies)
 
     def testGetMovieDetailsURLIsResolved(self):
-        url = reverse('getMovieDetails', args=['12345']) # Retrieves view function called when getMovieDetails/ endpoint with movie id passed as an argument
+        url = reverse('getMovieDetails', args=['12345']) # Retrieves view function called when we hit getMovieDetails/ endpoint with movie id passed as an argument
         self.assertEquals(resolve(url).func, getMovieDetails)
