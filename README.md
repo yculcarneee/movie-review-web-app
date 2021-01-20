@@ -70,7 +70,7 @@ npm install npm@latest -g
 
 ### Installation
 
-1. Sign up forr an account at [TMDB](https://www.themoviedb.org/) and get an API key by going to the API section in [Settings](https://www.themoviedb.org/settings/api)
+1. Sign up for an account at [TMDB](https://www.themoviedb.org/) and get an API key by going to the API section in [Settings](https://www.themoviedb.org/settings/api)
    
 2. Clone the repo
 ```sh
@@ -80,7 +80,23 @@ git clone https://github.com/yculcarneee/movie-review-web-app.git
 ```sh
 npm install
 ```
-4. Install Python packages in `movie_review_app_backend/` directory
+4. Create a virtual environment to install different Python packages by running the following command
+```
+python3 -m venv movie-review-app
+```
+
+You can activate the virtual environment by running the following command  
+
+Windows:
+```
+.\movie-review-app\Scripts\activate
+```
+
+Linux
+```
+source movie-review-app/bin/activate
+```
+5. Install Python packages in `movie_review_app_backend/` directory
 ```
 pip install -r requirements.txt
 ```
@@ -93,6 +109,29 @@ POSTGRES_USER=<Your Postgres username>
 POSTGRES_PASSWORD=<Your Postgres password>
 ```
 
+7. Run the following command in `movie_review_app_backend/` directory 
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+8. To run an instance, run 
+```
+python manage.py runserver
+```
+
+9. To run Django tests
+```
+python manage.py tests apis
+```
+```
+python manage.py tests database
+```
+
+10. To run React tests
+```
+npm run test
+```
 <!-- USAGE EXAMPLES
 ## Usage
 
