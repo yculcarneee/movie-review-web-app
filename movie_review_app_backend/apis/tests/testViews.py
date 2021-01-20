@@ -4,12 +4,12 @@ from django.urls import reverse
 from django.conf import settings
 
 class TestViews(TestCase):
-
+    # Test checks if the movies/ API endpoint filters movie details correctly in its response
     @patch('apis.views.requests.get')
     def testMoviesView(self, mock_get):
-        mock_response = Mock()
+        mock_response = Mock() # Mock requests.get() call made to TMDB by movies/ endpoint
         
-        expected_response = {
+        expected_response = { 
             'page': 1,
             'total_pages': 500,
             'total_results': 1000,
@@ -33,15 +33,16 @@ class TestViews(TestCase):
             ]
         }
 
-        mock_response.json.return_value = expected_response
-        mock_response.status_code = 200
+        mock_response.json.return_value = expected_response # Set expected response to the mock function's response's json component
+        mock_response.status_code = 200 # Set 200 status code for mock function's response
 
-        mock_get.return_value = mock_response
+        mock_get.return_value = mock_response 
 
-        response = self.client.get(reverse('movies'))
+        response = self.client.get(reverse('movies')) # Issue GET call to movies/ endpoint
 
-        results = response.json()
+        results = response.json() # Recieve response from movies/ endpoint
 
+        # Check if response sent by movies/ endpoint properly filters response sent by TMDB
         self.assertEquals(results, {
             'page': 1,
             'total_pages': 500,
@@ -60,11 +61,12 @@ class TestViews(TestCase):
         page = 1
         endpoint = 'https://api.themoviedb.org/3/discover/movie?api_key='+settings.TMDB_API_KEY+'&language=en-US&sort_by=popularity.desc&page='+str(page)
 
-        mock_get.assert_called_once_with(endpoint)
+        mock_get.assert_called_once_with(endpoint) # Asserts that the call to movies/ API called above endpoint at least once
 
+    # Test checks if the API endpoint filters movie details correctly in its response
     @patch('apis.views.requests.get')
     def testMoviesWithPageNumView(self, mock_get):
-        mock_response = Mock()
+        mock_response = Mock() # Mock requests.get() call made to TMDB by movies/ endpoint
         
         expected_response = {
             'page': 3,
@@ -90,15 +92,16 @@ class TestViews(TestCase):
             ]
         }
 
-        mock_response.json.return_value = expected_response
-        mock_response.status_code = 200
+        mock_response.json.return_value = expected_response # Set expected response to the mock function's response's json component
+        mock_response.status_code = 200 # Set 200 status code for mock function's response
 
         mock_get.return_value = mock_response
 
-        response = self.client.get(reverse('moviesWithPageNum', args=['2']))
+        response = self.client.get(reverse('moviesWithPageNum', args=['2'])) # Issue GET call to movies/ endpoint with page number 2 as argument
 
-        results = response.json()
+        results = response.json() # Recieve response from movies/ endpoint
 
+        # Check if response sent by movies/ endpoint properly filters response sent by TMDB
         self.assertEquals(results, {
             'page': 3,
             'total_pages': 500,
@@ -117,8 +120,9 @@ class TestViews(TestCase):
         page = 2
         endpoint = 'https://api.themoviedb.org/3/discover/movie?api_key='+settings.TMDB_API_KEY+'&language=en-US&sort_by=popularity.desc&page='+str(page)
 
-        mock_get.assert_called_once_with(endpoint)
-
+        mock_get.assert_called_once_with(endpoint) # Asserts that the call to movies/ API called above endpoint at least once
+    
+    # Test checks if the movies/page<page_num> API endpoint filters movie details correctly in its response
     @patch('apis.views.requests.get')
     def testGetMovieDetailsView(self, mock_get):
         mock_response = Mock()
