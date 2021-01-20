@@ -135,10 +135,9 @@ npm run test
 ```
 
 ## Usage
-<details>
-  <summary> 1. Browsing through different pages </summary>
-  <img src="movie-review-web-app/movie_review_app_backend/../../movie_review_app_backend/assets/gifs/Browsing through different pages.gif"  alt="Browsing through different pages">
-</details>  
+1. Browsing through different pages  
+   
+[![Movie Review App Demo](https://res.cloudinary.com/marcomontalbano/image/upload/v1611140005/video_to_markdown/images/youtube--w-JHkDDqH_o-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/w-JHkDDqH_o "Movie Review App Demo")
 <br/>
 <details>
   <summary> 2. Add a new movie to the Watched Movies List </summary>
